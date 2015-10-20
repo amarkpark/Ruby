@@ -1,21 +1,19 @@
 # 20150918 Image Blur 1
+# refactored on 20151014
 
 class Image
 
 	def initialize (x)
-		@image = [x]
+		@image = x
 	end
 
 	def output_image
-		@image.each_index do |i| #ennumerating the row index
-			@rows = @image[i]
-			@rows.each do |row|
-				puts row.join
-			end
+		@image.each do |row|
+			puts row.join
 		end
 	end
 
-end	# class Image
+end
 
 
 image = Image.new([

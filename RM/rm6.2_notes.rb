@@ -1,5 +1,12 @@
 # RubyMonk 6.2 Calling a Method last exercise notes:
 
+# The list of parameters passed to an object is, in fact, available as a list. 
+# To do this, we use what is called the splat operator - which is just an 
+#   asterisk (*).
+
+# The splat operator is used to handle methods which have a variable 
+# parameter list. Let's use it to create an add method that can 
+# handle any number of parameters.
 
 def add(*numbers)
   numbers.inject(0) { |sum, number| sum + number }

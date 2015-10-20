@@ -1,22 +1,23 @@
 # 20150917 cards.rb with Card and Deck classes ~AMP
 # http://www.thefirehoseproject.com/oop/12
+# 
 
 class Card
   attr_accessor :rank, :suit
-  @suits = %w[spades diamonds hearts clubs]
-  @ranks = %w[A 2 3 4 5 6 7 8 9 10 J Q K]
 
   def initialize (rank, suit)
     self.rank = rank
     self.suit = suit
   end
 
-  def show_card
+  def show
     puts "#{self.rank} of #{self.suit}"
   end
 
   def self.new_random
-    Card.new(@ranks.sample, @suits.sample)
+    suits = %w[spades diamonds hearts clubs]
+    ranks = %w[A 2 3 4 5 6 7 8 9 10 J Q K]
+    Card.new(ranks.sample, suits.sample)
   end
 
 end # class Card
@@ -27,7 +28,7 @@ end # class Card
 
 #   def initialize
 #     @suits = [:spades, :diamonds, :hearts, :clubs]
-#     @ranks = (1..13).to_a
+#     @ranks = (1..13).to_a # or %w[A 2 3 4 5 6 7 8 9 10 J Q K]
 #     @cards = (@ranks).product(@suits)
 #   end
 
@@ -46,11 +47,11 @@ class Deck # Longhand Deck
         @cards << Card.new(rank, suit)
       end
     end
-  end # initialize
+  end 
   
-  def show_deck
+  def show
     @cards.each do |card|
-      card.show_card
+      card.show
     end
   end
 
@@ -64,13 +65,13 @@ class Deck # Longhand Deck
 
   def deal(n)
     @cards.shift(n).each do |card|
-      card.show_card
+      card.show
     end
   end
 
   def cut(n) # cuts the deck to show a random card but does NOT remove it
     @cards.sample(n).each do |card|
-      card.show_card
+      card.show
     end 
   end
 
@@ -82,11 +83,11 @@ class Deck # Longhand Deck
 end #class Deck
 
 deck = Deck.new
-# deck.show_deck
+# deck.show
 # deck.count
 deck.shuffle
 # puts "Now for a shuffle."
-# deck.show_deck
+# deck.show
 # deck.count
 deck.deal(2)
 deck.count
