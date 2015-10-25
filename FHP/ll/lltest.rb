@@ -93,6 +93,25 @@ def print_values(list_node)
 	end
 end
 
+def findfirst(list_node)
+	begin
+		list_node = list_node.next_node
+	end until list_node.next_node.nil?
+		# push value onto stack
+	@first = list_node.value
+	byebug
+end
+
+def reverse_list(list_node)
+	test_node = list_node
+	begin
+		test_node = test_node.next_node
+	end until test_node.next_node.nil?
+	revstack.push(test_node)
+	first_node = test_node
+
+
+end	
 
 def reverse_list(list_node)
 	test_node = list_node
@@ -115,7 +134,7 @@ def reverse_list(list_node)
 			test_node = test_node.next_node
 		end
 	end
-	
+
 	until revstack.pop.nil?
 		revstack.pop.
 
@@ -134,6 +153,48 @@ end
 #     # ADD CODE HERE
 # end
 
+node1 = LinkedListNode.new(37)
+node2 = LinkedListNode.new(99, node1)
+node3 = LinkedListNode.new(12, node2)
+
+class Stack
+	attr_reader :data
+
+	def initialize
+		@data = nil
+	end
+
+	def push(value)
+		value.next_node = @data
+		@data = value
+	end
+
+	def pop
+		data = @data.value
+		@data = @data.next_node
+		return data
+	end
+end
+
+def reverse_list(list_node)
+	revstack = Stack.new(list_node)
+	while list_node.next_node != nil
+		list_node = list_node.next_node
+		revstack.push(list_node)
+	end
+	return revstack.pop
+	byebug
+end
+
+def print_values(list_node)
+	print "#{list_node.value} --> "
+	if list_node.next_node.nil?
+		print "nil\n"	# "\n" means next line in regex
+		return
+	else
+		print_values(list_node.next_node)
+	end
+end
 
 # end
 

@@ -1,6 +1,4 @@
-# 20151022 Linked List #1 llist1.rb
-require 'byebug'
-
+# 20151024 my linked list solution myll.rb
 
 class LinkedListNode
 	attr_accessor :value, :next_node
@@ -11,33 +9,18 @@ class LinkedListNode
 	end
 end
 
-class Stack
-	attr_reader :data
-
-	def initialize
-		@data = nil
-	end
-
-	def push(value)
-		@data = LinkedListNode.new(value, @data)
-	end
-
-	def pop
-		data = @data
-		@data = @data.next_node
-		return data
-	end
-end
-
 def reverse_list(list_node)
-	revstack = Stack.new
+	n = 1
+	name = "@revnode#{n}"
+	instance_variable_set(name, LinkedListNode.new(list_node.value, nil))
 	begin
-		current_value = list_node.value
-		revstack.push(current_value)
 		list_node = list_node.next_node
-	end until list_node.nil?
-	return revstack.pop
-	
+		revnext = instance_variable_get(name)
+		n += 1
+		name = "@revnode#{n}"
+		instance_variable_set(name, LinkedListNode.new(list_node.value, revnext))
+	end until list_node.next_node.nil?
+	return instance_variable_get(name)
 end
 
 def print_values(list_node)
