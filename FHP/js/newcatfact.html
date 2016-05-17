@@ -1,0 +1,50 @@
+<!-- newcatfact.html -->
+<html>
+  <head>
+  </head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script>
+      $(function() {
+        $.get( "http://www.catfact.info/api/v1/facts.json?page=6&per_page=12", function( data ) {
+          // var resultsAry = data.facts
+          var num = 0
+          var cFactDisplay = $('h2.catfact')
+          $(cFactDisplay).click(function() {
+            // console.log(resultsAry);
+            cFactDisplay.html(data.facts[num].details);
+            num++;
+          });
+        });
+      });
+      $(function() {
+        $('#addfact').click(function() {
+          var CatFact = $('#newfact').val();
+          // console.log("button was clicked");
+          $.post("http://www.catfact.info/api/v1/facts.json", { "fact" : { "details" : CatFact }}).done(function( resultData ) {
+            alert( "Success! Fact #" + resultData.id + ": " + CatFact );
+            });
+          $('#newfact').val('');
+        });
+      });
+      $(function(){
+        var newb = $("<button>", {"id": "tftdb", text: "TFTD"});
+        var addNewB = function() {
+          $(newb).insertAfter("#cre8b");
+        };
+        $("#cre8b").click(addNewB);
+        $("#tftdb").click(function(){alert("Chocolate!");});
+      });
+    </script>
+    <h1 style="text-align:center" class="pagetitle">Catfact API Practice 2</h1>
+    <h2 style="text-align:center">Awesome Cat Facts:</h2>
+    <h2 style="text-align:center" class="catfact">Click Here!</h2>
+    <hr />
+    <div style="text-align:center">
+      <input id="newfact"></input>
+      <button id="addfact">Add Fact</button>
+    </div>
+    <hr />
+    <h3 style="text-align:center" id="cre8b">click me to create button</h3>
+  </body>
+</html>

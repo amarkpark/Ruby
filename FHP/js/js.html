@@ -5,14 +5,38 @@
 	</head>
 	<body>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<h1>Hello World!</h>
+		<script src="jquery.countdown.min.js"></script>
 		<script> // will execute javascript
-			var afterPageLoads = function() {
-			$("h2").html("What a world!")
-			};
-			// afterPageLoads();
-			$(afterPageLoads);
+			$(function() {
+				var h2element = $('h2');
+				var clickcount = 0;
+				var submit = $('button#submit');
+				h2element.click(function() {
+					$.get("http://www.catfact.info/api/v1/facts.json?", function(data) {
+						var detail = data.facts[clickcount].details;
+						h2element.html(detail);
+						clickcount++;
+					});
+				});
+				submit.click(function() {
+					var factentered = $('input#detail').val();
+					$.post("http://www.catfact.info/api/v1/facts.json", {"fact" : { "details" : factentered } }, function( data ) {
+						console.log(data);
+					});
+				});
+			});
 		</script>
-		<h2>post js alert</h2>
+		<h1>Hello World!</h>
+		<h2>Click me! Click me!</h2>
+		<hr />
+		<input id="detail" />
+		<button id="submit">Submit Fact</button>
+		<hr />
+		<div id="getting-started"></div>
+			<script type="text/javascript">
+				$("#getting-started").countdown("2015/10/31", function(event) {
+					$(this).text(event.strftime('%D days %H:%M:%S'));
+				});
+			</script>
 	</body>
 </html>

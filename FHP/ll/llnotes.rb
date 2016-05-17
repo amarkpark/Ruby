@@ -367,27 +367,26 @@ print_values(revlist)
 # 	end
 # end
 
-# class NumberStack
-#     attr_reader :data, :topval
-    
-#     def initialize
-#         @data = nil
-#     end
+class NumberStack
+	attr_reader :data, :topval
 
-#     def push(value)
-#     	value = value.to_s(16)
-#     	@data = "#{value.length.to_s(16)}#{value}#{@data}"
-#     end
+	def initialize
+		@data = nil
+	end
 
-#     def pop
-#         length = @data.byteslice(0).to_i(16)
-#         topval = @data.byteslice(1, length).to_i(16)
-#         remainder = (@data.length - length)
-#         @data = @data.byteslice((length+1), remainder)
-#         topval
-#     end
+	def push(value)
+		value = value.to_s(16)
+		@data = "#{value.length.to_s(16)}#{value}#{@data}"
+	end
 
-# end
+	def pop
+		length = @data.byteslice(0).to_i(16)
+		topval = @data.byteslice(1, length).to_i(16)
+		remainder = (@data.length - length)
+		@data = @data.byteslice((length+1), remainder)
+		topval
+	end
+end
 
 # # node1 = LinkedListNode.new(37)
 # # node2 = LinkedListNode.new(99, node1)
