@@ -33,6 +33,7 @@ def reduncheck(dir)
   @dirfiles = Dir.glob("#{dir}*.xml").length
   if ((@dirfiles == @zipedfiles) && (File.size?("#{dir}timestamp.txt") != nil))
     return true
+  end
 end
 
 def download(sourcedir, docname, destdir)
@@ -49,24 +50,25 @@ end
 def unzip(docname, destdir)
   @unzipdir = "#{destdir}/#{File.basename(docname, ".zip")}/"
   # zipfilename = destdir + docname
-  byebug
+  # byebug
   dircheck(@unzipdir)
   @xmlcount = 0
-  Zip::File.open(destdir+docname) do |zipfile|
+  Zip::File.open("#{destdir}/#{docname}") do |zipfile|
     @zipedfiles = zipfile.glob('*.*').length
-    byebug
+    # byebug
     return if reduncheck(@unzipdir)
     # zipfile.each do |entry|  
     zipfile.glob('*.xml')[0,3].each do |entry| #revert to above after testing
       # @xmlfile = entry.name
-      next if File.exists?(entry.name)
-      byebug
+      # byebug
+      next if File.exists?(@unzipdir+entry.name)
+      # byebug
       puts "Processing #{entry.name}"
       entry.extract(@unzipdir+entry.name)
       @xmlcount += 1
     end
     @timestamp = Time.now.strftime("%Y%m%d%H%M%S")
-    File.new("#{@unzipdir}timestamp.txt", "tw+").write(@timestamp)
+    File.new("#{@unzipdir}timestamp.txt", "w+").write(@timestamp)
     @zipedfiles == @xmlcount ? (puts "Unzipped #{@xmlcount} xml files") : (puts "unzip incomplete")
   end
 end
@@ -90,6 +92,6 @@ end
 
 # getlist("http://feed.omgili.com/5Rh5AMTrc4Pv/mainstream/posts/")
 
-unzip("1463262924071.zip", "/vagrant/src/ruby/JobSearch/nuvi/download/")
+unzip("1463262924071.zip", "/vagrant/src/ruby/JobSearch/nuvi/download")
 
 puts "That's all folks!"

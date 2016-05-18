@@ -14,10 +14,22 @@ require 'uri'
 def parsexml(xmlfile)
   # filestream = xmlfile.get_input_stream.read
   # puts filestream
-  xmldoc = Nokogiri::XML(Zip::File.open(xmlfile.name).file)
-  # xmldoc.keys.each_with_object({}) do |key, newhash|
-  #   newhash[key] = document[key]
-  # end
+  # xmldoc = Nokogiri::XML(Zip::File.open(xmlfile))
+  xmldoc = Nokogiri::XML(xmlfile.get_input_stream.read)
+  # xmldoc = Nokogiri::XML(Zip::InputStream.open(xmlfile))
+  # did I ever try .get_output_stream?
+  xmldata = xmldoc.elements.children
+  xmlhash = {}
+  %w[type 
+    forum 
+    forum_title 
+    discussion_title 
+    language
+    topic_url 
+    topic_text 
+    external_links 
+    country 
+    main_image].each {|n| xmlhash[n] = xmldata.css(n).text}
   byebug
   xmldoc.keys.each {|key| puts key}
 end
