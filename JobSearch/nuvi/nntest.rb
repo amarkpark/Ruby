@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'open-uri'
 require 'zip'
+require 'zip/filesystem'
 require 'nokogiri'
 require 'redis'
 require 'byebug'
@@ -10,17 +11,29 @@ require 'net/http'
 require 'uri'
 
 
+def parsexml(xmlfile)
+  # filestream = xmlfile.get_input_stream.read
+  # puts filestream
+  xmldoc = Nokogiri::XML(Zip::File.open(xmlfile.name).file)
+  # xmldoc.keys.each_with_object({}) do |key, newhash|
+  #   newhash[key] = document[key]
+  # end
+  byebug
+  xmldoc.keys.each {|key| puts key}
+end
+
 @xmlcount = 0
 
 def unzip(url, docname)
   zipfilename = open(url + docname)
   Zip::File.open(zipfilename) do |zipfile|
     # zipfile.each do |entry|  
-    zipfile.glob('*.xml')[0,2].each do |entry| #revert to above after testing
+    zipfile.glob('*.xml')[0,1].each do |entry| #revert to above after testing
       #nokogiri parsing here
       @zipedfiles = zipfile.glob('*.*').length
       @xmlfile = entry.name
-      puts @xmlfile
+      puts "Processing #{@xmlfile}"
+      parsexml(entry)
       @xmlcount += 1
     end
     @zipedfiles == @xmlcount ? (puts "Unzipped #{@xmlcount} xml files") : (puts "unzip incomplete")
@@ -33,7 +46,7 @@ def getlist(url)
   @url = url
   doc = Nokogiri::HTML(open(@url))
   # @fileset = doc.css("td a")[1..-1]
-  @fileset = doc.css("td a")[1,2] #revert to above after testing
+  @fileset = doc.css("td a")[1,1] #revert to above after testing
   @fileset.each do |item|
     @docname = item.text
     puts "Opening #{@docname}"

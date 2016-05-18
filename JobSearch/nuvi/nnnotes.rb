@@ -56,6 +56,13 @@ document.keys.each_with_object({}) do |key, newhash|
   newhash[key] = document[key]
 end
 
+document.elements.each_with_object({}) do |key, newhash|
+  newhash[key] = document[key]
+end
+
+%w[]
+
+
 # # URI redirects:
 # require 'net/http'
 # require 'uri'
@@ -307,6 +314,21 @@ def unzip_file (file, destination)
     end
   end
 end
+
+compressed_filestream = Zip::OutputStream.write_buffer do |zos|
+  @animals.each do |animal|
+    zos.put_next_entry "#{animal.name}-#{animal.id}.json"
+    zos.print animal.to_json(only: [:name, :age, :species])
+  end
+end
+
+IO.copy_stream(open('http://example.com/image.png'), 'destination.png')
+
+timestamp = Time.now.strftime("%Y%m%d%H%M%S")
+
+require 'open-uri'
+download = open('http://example.com/image.png')
+IO.copy_stream(download, '~/image.png')
 
 # Fetch and parse HTML document
 doc = Nokogiri::HTML(open('http://www.nokogiri.org/tutorials/installing_nokogiri.html'))
