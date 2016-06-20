@@ -7,8 +7,22 @@ class LinkedListNode
 	def initialize(value, next_node=nil)
 		@value = value
 		@next_node = next_node
-		# why were these initialized as instance variables if they are accessor-ed
 	end
+
+	def revlist2(list_node, previous_node=nil)
+		@rev_node = LinkedListNode.new(list_node.value, previous_node)
+		until list_node.next_node.nil?
+	    list_node = list_node.next_node
+	    # byebug
+	    revlist2(list_node, @rev_node)
+	  end
+	  return @rev_node
+	end
+
+# bad code above returns [Web Dev]:  /vagrant/src/ruby/fhp/ll $ ruby llist2.rb
+# 84 --> 12 --> 99 --> 37 --> nil
+# -------
+# 37 --> 37 --> 99 --> 37 --> 37 --> 99 --> 12 --> 84 --> nil
 
 	# def print_values(list_node)
 	# 	print "#{list_node.value} --> "
@@ -29,19 +43,19 @@ class LinkedListNode
 		byebug
 	end
 
-	def revlist(list_node)
-		lastvalue = list_node.value
-		# initialize a new Stack object
-		@revstack = Stack.new
-		# pop items off the list and push them into stack
-		begin
-			findfirst(list_node)
-			@revstack.push(@first)
-		end until lastvalue == @first
-		# pop items off stack into reverse list
-		nodename
-		rnode@incriment = LinkedListNode.new(@revstack.pop, lambda {})
-	end
+	# def revlist(list_node)
+	# 	lastvalue = list_node.value
+	# 	# initialize a new Stack object
+	# 	@revstack = Stack.new
+	# 	# pop items off the list and push them into stack
+	# 	begin
+	# 		findfirst(list_node)
+	# 		@revstack.push(@first)
+	# 	end until lastvalue == @first
+	# 	# pop items off stack into reverse list
+	# 	nodename
+	# 	rnode@incriment = LinkedListNode.new(@revstack.pop, lambda {})
+	# end
 
 end
 
