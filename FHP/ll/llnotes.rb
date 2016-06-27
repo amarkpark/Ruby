@@ -416,3 +416,97 @@ end
 # puts stack.pop
 # puts stack.data
 
+
+
+# # 20160620 Linked List #2 Tortoise and Hare llist2.2.rb
+# require 'byebug'
+
+
+# class LinkedListNode
+#   attr_accessor :value, :next_node
+
+#   def initialize(value, next_node=nil)
+#     @value = value
+#     @next_node = next_node
+#   end
+# end
+
+# # def revlist2(list_node, previous_node=nil)
+# #   @rev_node = LinkedListNode.new(list_node.value, previous_node)
+# #   if list_node.next_node.nil?
+# #     return @rev_node
+# #   else
+# #     list_node = list_node.next_node
+# #     revlist2(list_node, @rev_node)
+# #   end
+# # end
+
+# def findloop(list_node)
+#   tnode = list_node.next_node
+#   hnode = tnode.next_node
+#   until tnode.value == hnode.value do
+#     2.times do 
+#       hnode = hnode.next_node
+#       return puts "No loop found" if hnode == nil
+#     end
+#     tnode = tnode.next_node
+#   end
+#   puts "Loop found"
+#   tnode = tnode.next_node
+#   count = 1
+#   until tnode.value == hnode.value do
+#     tnode = tnode.next_node
+#     count += 1
+#   end
+#   puts "Loop contains #{count} nodes."
+#   return
+# end
+
+# # def findloop2(list_node)
+# #   tnode = list_node.next_node
+# #   # hnode = list_node.next_node.next_node
+# #   if tnode == nil then
+# #     return "No loop found."
+# #   else
+# #     hnode = tnode.next_node
+# #     byebug
+# #     count = 1
+# #     until tnode.value == hnode.value do
+# #       count += 1
+# #       findloop2(tnode)
+# #     end
+# #     puts "Loop found with #{count} nodes."
+# #     return
+# #   end
+# #   # puts "No loop found."
+# # end
+
+
+# # def print_values(list_node)
+# #   print "#{list_node.value} --> "
+# #   if list_node.next_node.nil?
+# #     print "nil\n" 
+# #     return
+# #   else
+# #     print_values(list_node.next_node)
+# #   end
+# # end
+
+
+# node1 = LinkedListNode.new(37)
+# node2 = LinkedListNode.new(99, node1)
+# node3 = LinkedListNode.new(12, node2)
+# node4 = LinkedListNode.new(84, node3)
+# node5 = LinkedListNode.new(16, node4)
+# node6 = LinkedListNode.new(25, node5)
+# node7 = LinkedListNode.new(183, node6)
+# node1.next_node = node6
+
+# # print_values(node4)
+
+# # puts "-------"
+# # # byebug 
+# # revlist = revlist2(node4)
+
+# # print_values(revlist)
+# findloop(node7)
