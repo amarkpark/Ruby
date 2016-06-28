@@ -2,7 +2,7 @@
 
 module Collatz
   def self.generate(n)
-    n = n.to_i.abs # error handling for non-integer non-positive values of n
+    n = n.to_i.abs # error handling for non-integer non-positive values
     @sequence = []
     while n >= 1
       @sequence << n
@@ -13,7 +13,6 @@ module Collatz
         n = (3 * n + 1)
       end
     end
-    # puts "For n=#{@sequence[0]}, length: #{@sequence.length}, #{@sequence}"
     return @sequence
   end
 
@@ -29,8 +28,7 @@ module Collatz
         @longest = collatz
       end
     end
-    # would it be better to capture and return the whole collatz sequence
-    # as an object?
+
     return @longest
   end
 
@@ -54,5 +52,3 @@ module Collatz
   end
 end
 
-cset = Collatz.find_longest(1,300)
-Collatz.summary(cset)
