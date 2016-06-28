@@ -49,4 +49,10 @@ end
 #        user     system      total        real
 # iterative_fib  0.000000   0.000000   0.000000 (  0.000334)
 # recursive_fib 19.960000   0.040000  20.000000 ( 20.395351)
+
+# Results for n = 23
+# [Web Dev]:  /vagrant/src/ruby/fhp/fib $ ruby fib.rb
+#        user     system      total        real
+# iterative_fib  0.000000   0.000000   0.000000 (  0.000012)
+# recursive_fib 51.060000   0.140000  51.200000 ( 52.047847)
 # [Web Dev]:  /vagrant/src/ruby/fhp/fib $ 
