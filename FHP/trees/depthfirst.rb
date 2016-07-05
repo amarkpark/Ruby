@@ -33,6 +33,16 @@ def depth_first_r(node, matcher, found, stack)
   depth_first_r(stack.pop, matcher, found, stack)
 end
 
+def depth_first_r2(node, matcher) #result of an 'imitative refactor'
+  # puts "Current Node: #{node.payload}"
+  return node if node.payload == matcher
+  node.children.each do |child|
+    result = depth_first_r2(child, matcher)
+    return result if result != nil
+  end
+  nil
+end
+
 # The "Leaves" of a tree, elements that have no children
 deep_fifth_node = Tree.new(5, [])
 eleventh_node = Tree.new(11, [])
@@ -52,6 +62,8 @@ Benchmark.bm do |x|
   x.report("iterative_2") { depth_first_i(trunk, 9) }
   x.report("recursive_1") { depth_first_r(trunk, 11, [], []) }
   x.report("recursive_2") { depth_first_r(trunk, 9, [], []) }
+  x.report("iterative_1") { depth_first_r2(trunk, 11) }
+  x.report("iterative_2") { depth_first_r2(trunk, 9) }
 end
 
 # Results
@@ -61,4 +73,14 @@ end
 # iterative_2  0.000000   0.000000   0.000000 (  0.000079)
 # recursive_1  0.000000   0.000000   0.000000 (  0.000008)
 # recursive_2  0.000000   0.000000   0.000000 (  0.000026)
+# [Web Dev]:  /vagrant/src/ruby/fhp/trees $ 
+
+# [Web Dev]:  /vagrant/src/ruby/fhp/trees $ ruby depthfirst.rb
+#        user     system      total        real
+# iterative_1  0.000000   0.000000   0.000000 (  0.000023)
+# iterative_2  0.000000   0.000000   0.000000 (  0.000010)
+# recursive_1  0.000000   0.000000   0.000000 (  0.000010)
+# recursive_2  0.000000   0.000000   0.000000 (  0.000010)
+# iterative_1  0.000000   0.000000   0.000000 (  0.000008)
+# iterative_2  0.000000   0.000000   0.000000 (  0.000006)
 # [Web Dev]:  /vagrant/src/ruby/fhp/trees $ 
